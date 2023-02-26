@@ -19,4 +19,12 @@ class Company extends Model
         'name',
         'description'
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

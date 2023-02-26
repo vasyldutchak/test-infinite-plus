@@ -18,8 +18,8 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'project_id' => $this->project_id,
-            'company_id' => $this->company_id
+            'company' => $this->company->name,
+            'project' => $this->project->name
         ];
     }
 }
