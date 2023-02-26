@@ -4,22 +4,22 @@
 namespace App\Repositories;
 
 
-use App\Models\Company;
+use App\Models\Employee;
 use Illuminate\Support\Collection;
 
-interface CompanyRepositoryInterface
+interface EmployeeRepositoryInterface
 {
     /**
      * @param array $data
-     * @return Company
+     * @return Employee
      */
-    public function create(array $data): Company;
+    public function create(array $data): Employee;
 
     /**
      * @param int $id
-     * @return Company
+     * @return Employee
      */
-    public function findOneById(int $id): Company;
+    public function findOneById(int $id): Employee;
 
     /**
      * @return Collection
@@ -28,11 +28,11 @@ interface CompanyRepositoryInterface
 
     /**
      * @param array $data
-     * @param Company $company
-     * @return Company
+     * @param Employee $employee
+     * @return Employee
      * @throws \Exception
      */
-    public function update(array $data, Company $company): Company;
+    public function update(array $data, Employee $employee): Employee;
 
     /**
      * @param int $id

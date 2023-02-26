@@ -4,29 +4,29 @@
 namespace App\Repositories;
 
 
-use App\Models\Company;
+use App\Models\Employee;
 use Illuminate\Support\Collection;
 
-class CompanyRepository implements CompanyRepositoryInterface
+class EmployeeRepository implements EmployeeRepositoryInterface
 {
+    /**
+     * @var Employee
+     */
+    private Employee $model;
 
     /**
-     * @var Company
+     * @param Employee $employee
      */
-    private Company $model;
-
-    /**
-     * @param Company $company
-     */
-    public function __construct(Company $company)
+    public function __construct(Employee $employee)
     {
-        $this->model = $company;
+        $this->model = $employee;
     }
+
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): Company
+    public function create(array $data): Employee
     {
         return $this->model->create($data);
     }
@@ -34,7 +34,7 @@ class CompanyRepository implements CompanyRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function findOneById(int $id): Company
+    public function findOneById(int $id): Employee
     {
         return $this->model->findOrFail($id);
     }
@@ -50,15 +50,15 @@ class CompanyRepository implements CompanyRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function update(array $data, Company $company): Company
+    public function update(array $data, Employee $employee): Employee
     {
-        $company->fill($data);
+        $employee->fill($data);
 
-        if (!$company->save()) {
-            throw new \Exception("Can't update company model (company ID: {$company->id}");
+        if (!$employee->save()) {
+            throw new \Exception("Can't update company model (employee ID: {$employee->id}");
         }
 
-        return $company;
+        return $employee;
     }
 
     /**
@@ -68,5 +68,4 @@ class CompanyRepository implements CompanyRepositoryInterface
     {
         return $this->model->destroy($id);
     }
-
 }
