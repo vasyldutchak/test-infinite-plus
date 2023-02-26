@@ -15,6 +15,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     private Employee $model;
 
     /**
+     * EmployeeRepository constructor.
      * @param Employee $employee
      */
     public function __construct(Employee $employee)

@@ -16,6 +16,7 @@ class CompanyRepository implements CompanyRepositoryInterface
     private Company $model;
 
     /**
+     * CompanyRepository constructor.
      * @param Company $company
      */
     public function __construct(Company $company)

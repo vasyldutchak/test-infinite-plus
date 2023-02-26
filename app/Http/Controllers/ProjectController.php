@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
-use App\Http\Resources\EmployeeCollection;
-use App\Http\Resources\EmployeeResource;
-use App\Models\Employee;
-use App\Repositories\EmployeeRepositoryInterface;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Resources\ProjectCollection;
+use App\Http\Resources\ProjectResource;
+use App\Models\Project;
+use App\Repositories\ProjectRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
-class EmployeeController extends Controller
+class ProjectController extends Controller
 {
 
     /**
-     * @var EmployeeRepositoryInterface
+     * @var ProjectRepositoryInterface
      */
-    private EmployeeRepositoryInterface $employeeRepo;
+    private ProjectRepositoryInterface $projectRepo;
 
     /**
-     * EmployeeController constructor.
-     * @param EmployeeRepositoryInterface $employeeRepo
+     * ProjectController constructor.
+     * @param ProjectRepositoryInterface $projectRepo
      */
-    public function __construct(EmployeeRepositoryInterface $employeeRepo)
+    public function __construct(ProjectRepositoryInterface $projectRepo)
     {
-        $this->employeeRepo = $employeeRepo;
+        $this->projectRepo = $projectRepo;
     }
 
     /**
      * Display a listing of the resource.
-     * @return JsonResponse|EmployeeCollection
+     * @return JsonResponse|ProjectCollection
      */
-    public function index(): JsonResponse|EmployeeCollection
+    public function index(): JsonResponse|ProjectCollection
     {
         try {
-            return new EmployeeCollection($this->employeeRepo->getAll());
+            return new ProjectCollection($this->projectRepo->getAll());
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -42,18 +42,18 @@ class EmployeeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param StoreEmployeeRequest $request
+     * @param StoreProjectRequest $request
      * @return JsonResponse
      */
-    public function store(StoreEmployeeRequest $request): JsonResponse
+    public function store(StoreProjectRequest $request): JsonResponse
     {
         try {
-            $employee = $this->employeeRepo->create($request->all());
+            $project = $this->projectRepo->create($request->all());
 
             return response()->json(
                 [
                     'message' => 'Success',
-                    'employeeId' => $employee->id
+                    'projectId' => $project->id
                 ]
             );
         } catch (\Exception $e) {
@@ -64,12 +64,12 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      * @param string $id
-     * @return EmployeeResource|JsonResponse
+     * @return JsonResponse|ProjectResource
      */
-    public function show(string $id): EmployeeResource|JsonResponse
+    public function show(string $id): JsonResponse|ProjectResource
     {
         try {
-            return new EmployeeResource($this->employeeRepo->findOneById($id));
+            return new ProjectResource($this->projectRepo->findOneById($id));
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -77,14 +77,14 @@ class EmployeeController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param UpdateEmployeeRequest $request
-     * @param Employee $employee
+     * @param UpdateProjectRequest $request
+     * @param Project $project
      * @return JsonResponse
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee): JsonResponse
+    public function update(UpdateProjectRequest $request, Project $project): JsonResponse
     {
         try {
-            $this->employeeRepo->update($request->all(), $employee);
+            $this->projectRepo->update($request->all(), $project);
 
             return response()->json(['message' => 'Success']);
         } catch (\Exception $e) {
@@ -100,7 +100,7 @@ class EmployeeController extends Controller
     public function destroy(string $id): JsonResponse
     {
         try {
-            $this->employeeRepo->delete($id);
+            $this->projectRepo->delete($id);
 
             return response()->json(['message' => 'Success']);
         } catch (\Exception $e) {
