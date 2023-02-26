@@ -16,9 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/company', [CompanyController::class, 'index']);
+Route::get('/company/{company}', [CompanyController::class, 'show']);
+
+Route::get('/employee', [EmployeeController::class, 'index']);
+Route::get('/employee/{employee}', [EmployeeController::class, 'show']);
+
+Route::get('/project', [ProjectController::class, 'index']);
+Route::get('/project/{project}', [ProjectController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('/company', CompanyController::class);
-    Route::apiResource('/employee', EmployeeController::class);
-    Route::apiResource('/project', ProjectController::class);
+    Route::apiResource('/company', CompanyController::class)->except(['index', 'show']);
+    Route::apiResource('/employee', EmployeeController::class)->except(['index', 'show']);
+    Route::apiResource('/project', ProjectController::class)->except(['index', 'show']);
 });
