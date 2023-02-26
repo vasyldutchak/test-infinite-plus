@@ -14,10 +14,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         if (User::where('email', 'test@example.com')->first() === null) {
-            User::factory()->create([
+            $user = User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
+
+            $user->update([
+                'remember_token' => $user->createToken('Laravel')->plainTextToken
+            ]);
+
         }
     }
 }
