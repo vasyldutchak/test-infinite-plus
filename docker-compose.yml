@@ -5,28 +5,27 @@ services:
         container_name: database
         restart: unless-stopped
         environment:
-            MYSQL_ROOT_PASSWORD: infinite
-            MYSQL_DATABASE: infinite
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
         volumes:
             - ./build:/var/lib/
         ports:
             - '3307:3306'
         networks:
             - backend
+        env_file:
+            - .env
     php-apache:
         container_name: php-apache
+        restart: unless-stopped
         build:
             dockerfile: ./build/apache/Dockerfile
-        environment:
-            COMPOSER_ALLOW_SUPERUSER: '1'
         ports:
             - '8080:80'
         networks:
             - backend
         volumes:
-            - .:/var/www/infinite
             - ./build/apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
-            - ./build/docker/docker_env:/var/www/infinite/.env
         depends_on:
             - database
 networks:
